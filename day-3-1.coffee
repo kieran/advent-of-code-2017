@@ -1,4 +1,5 @@
 assert = console.assert
+input = require './day-3-input.coffee'
 
 ###
   From: http://adventofcode.com/2017/day/3
@@ -103,8 +104,8 @@ class Ring
 ###
   Answer question 1
 ###
-num = 361527
-console.log "Distance for #{num} is #{Ring.distanceFor num}"
+
+console.log "Distance for #{input} is #{Ring.distanceFor input}"
 
 
 ###
