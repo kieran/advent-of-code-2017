@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-3-input.coffee'
+input = require './input'
 
 ###
   From: http://adventofcode.com/2017/day/3

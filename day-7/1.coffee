@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-7-input.coffee'
+input = require './input'
 
 pat = /(\S+)\s\((\d+)\)(\s->\s(.*))?/
 

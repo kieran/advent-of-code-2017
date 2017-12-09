@@ -1,4 +1,4 @@
-input = require './day-1-input.coffee'
+input = require './input'
 
 sum = 0
 

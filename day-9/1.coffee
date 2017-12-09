@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-9-input.coffee'
+input = require './input'
 
 sum = (arr)-> arr.reduce (m, el)->
   m += el

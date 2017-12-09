@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-6-input.coffee'
+input = require './input'
 
 realloc = (input='')->
   # our array of memory banks

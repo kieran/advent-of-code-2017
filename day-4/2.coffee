@@ -1,11 +1,16 @@
 assert = console.assert
-input = require './day-4-input.coffee'
+input = require './input'
 
 check = (phrase='')->
   words =
     phrase
     .split /\s+/    # split the phrase into words
-    .sort()         # sort the phrase
+    .map (w)->      # sort the letters of each word
+      w
+      .split ''
+      .sort()
+      .join ''
+    .sort()         # sort the final phrase
 
   # bail if a duplicate word is found
   for word, idx in words
@@ -30,6 +35,8 @@ console.log count
   Tests
 ###
 
-assert check 'aa bb cc dd ee'
-assert not check 'aa bb cc dd aa'
-assert check 'aa bb cc dd aaa'
+assert check 'abcde fghij'
+assert not check 'abcde xyz ecdab'
+assert check 'a ab abc abd abf abj'
+assert check 'iiii oiii ooii oooi oooo'
+assert not check 'oiii ioii iioi iiio'

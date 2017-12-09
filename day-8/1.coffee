@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-8-input.coffee'
+input = require './input'
 
 pat = ///
   (\w+)        # register
@@ -17,7 +17,7 @@ pat = ///
 
 
 class CPU
-  constructor: (input='', @registers={}, @max=0)->
+  constructor: (input='', @registers={})->
     for line in input.split '\n'
       [match, args...] = line.match pat
       @eval args...
@@ -26,8 +26,7 @@ class CPU
     @registers[name] ||= new Register name
 
   eval: (r, m, v, r2, c, v2)->
-    if @register(r2)[c] v2
-      @max = Math.max @max, @register(r)[m] v
+    @register(r)[m] v if @register(r2)[c] v2
 
   largest: ->
     Object.values @registers
@@ -35,6 +34,7 @@ class CPU
       a.value -
       b.value
     .pop()
+
 
 class Register
   constructor: (@name, @value=0)->
@@ -68,7 +68,7 @@ class Register
 ###
 
 cpu = new CPU input
-console.log cpu.max
+console.log cpu.largest().value
 
 
 ###
@@ -85,4 +85,4 @@ c inc -20 if c == 10
 """
 
 cpu = new CPU input
-assert 10 is cpu.max
+assert 1 is cpu.largest().value

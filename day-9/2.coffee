@@ -1,4 +1,4 @@
-input = require './day-9-input.coffee'
+input = require './input'
 
 score = (str)->
   ignore = false

@@ -1,5 +1,5 @@
 assert = console.assert
-input = require './day-5-input.coffee'
+input = require './input'
 
 escape = (input='')->
   ar = (parseInt n for n in input.split /\n/)
