@@ -31,11 +31,11 @@ class Dance
       # we know that the steps are cyclical
       # and will repeat every `i` cycles
       if (str = @toString()) in @history
-        # skip ahead to the very last segment
-        i = repeat - repeat % i
-        # and clear out the history
-        # so we don't try to skip again
-        @history = []
+        # now that we've identified the loop
+        # the last element is already
+        # in our history. Skip there
+        @line = @history[repeat % i].split ''
+        return @
 
       @history.push str
     @
