@@ -1,29 +1,38 @@
 input = require './input'
 { assert, time, timeEnd, log } = console
 
+###
+  Utility functions
+###
+
+# string -> array
 s2a = (str)->
   str
   .split '/'
   .map (seg)->
     seg.split ''
 
+# array -> string
 a2s = (arr)->
   arr
   .map (seg)->
     seg.join ''
   .join '/'
 
+# array -> text grid for visual deugging
 a2debug = (arr)->
   arr
   .map (seg)->
     seg.join ''
   .join '\n'
 
+# flips an array, left <-> right
 flip = (arr)->
   arr
   .map (row)->
     row.reverse()
 
+# rotates an array, clockwise
 rotate = (arr)->
   copy = JSON.parse JSON.stringify arr
   for i in [0..(arr.length-1)]
@@ -32,8 +41,10 @@ rotate = (arr)->
   copy
 
 
+# An art
 class Art
   constructor: (rules)->
+    # starter grid
     @grid = [
       '.#.'.split ''
       '..#'.split ''
@@ -41,17 +52,25 @@ class Art
     ]
 
     @rules = (new Rule line for line in rules.split '\n')
+    @
 
-
+  # enhances the art by 1 step
   step: ->
     for size in [2,3]
       if 0 is @grid.length % size
-
         @grid = @process size
         return @
-    # throw 'wtf'
 
+  # processes the grid
+  # in groups of `size`
+  #
+  # returns the new state
+  # of the grid
   process: (size)->
+
+    # step 1:
+    # build a temp array
+    # full of replacement tiles
     temp = []
     for i in [0..(@grid.length-1)] by size
       temp_row = []
@@ -63,6 +82,10 @@ class Art
             continue
       temp.push temp_row
 
+    # step 2:
+    # re-constitute the new grid of grids
+    # into a single grid. Kind of a
+    # shitty 2-d flatten function
     ret = []
     for row, i in temp
       for tile, j in row
@@ -73,13 +96,15 @@ class Art
             ret[i*witdh+ti][j*witdh+tj] = tile_col
     ret
 
-
+  # slices a `size`-sized tile
+  # out the grid at the coords of
+  # [ row, col ]
   slice: (row, col, size)->
-    lol = @grid.slice(row, row+size).map (row)->
+    @grid.slice(row, row+size).map (row)->
       row.slice col, col+size
 
-    lol
-
+  # counts the number of '#'
+  # chars in the grid
   num_on: ->
     count = 0
     for row in @grid
@@ -87,14 +112,16 @@ class Art
         count++ if col is '#'
     count
 
+# a replacement rule
 class Rule
   constructor: (line)->
     [before, after] = line.split ' => '
 
-    @matches = [before]
     tile = s2a before
-    @size = tile.length
 
+    # create an array of all possible matches
+    # ugly, not-deduped
+    @matches = [before]
     @matches.push a2s flip tile
     @matches.push a2s rotate tile
     @matches.push a2s flip rotate tile
@@ -105,9 +132,10 @@ class Rule
 
     @replace = s2a after
 
+  # if the input tile matches this rule
+  # then return the replacement tile
   match: (arr)->
-    if a2s(arr) in @matches
-      @replace
+    @replace if a2s(arr) in @matches
 
 
 ###
