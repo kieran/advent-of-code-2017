@@ -30,7 +30,9 @@ a2debug = (arr)->
 flip = (arr)->
   arr
   .map (row)->
-    row.reverse()
+    row
+    .slice() # prevent mutating the input array
+    .reverse()
 
 # rotates an array, clockwise
 rotate = (arr)->
